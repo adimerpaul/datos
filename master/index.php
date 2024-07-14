@@ -309,7 +309,7 @@ div #imagen {
 
           const doc = new jsPDF('p', 'mm', 'letter');
 
-          doc.rect(10, 10, 196, 260)
+          doc.rect(10, 10, 196, 250)
           const img = new Image()
           img.src = 'img/b.jpg'
           doc.addImage(img, 'JPEG', 17, 12, 17, 17)
@@ -389,6 +389,12 @@ div #imagen {
             subtitle('TELEFONO', 90, 190)
             underline(`       ${json.telefono_caso_accidente}                `, 120, 190)
 
+          titleFoot('ME COMPROMETO A INFORMAR CUALQUIERCAMBIO DE LOS DATOS ANTES MENCIONADOS, ESTANDO DE ACUERDO QUE PUEDEN SER VERIFICADOS, CONOCIENDO LA SANCIÓN ADMINISTRATIVA EN CASO DE PROPORCIONAR DATOS FALSOS', 110, 200)
+
+          titleFoot('________________________________________', 110, 235)
+            titleFoot('FIRMA DE LA TRABAJADORA/TRABAJADOR', 110, 240)
+          textMinusWithAuto('NOTA: SE DEBE ADJUNTAR COPIA DE CREDENCIAL DE ELECTOR Y COMPROBANTE DE DOMICILIO', 15, 255)
+          text('Clave: 1A74-009-120', 170, 265)
 
 
           iframe.src = doc.output('datauristring');
@@ -410,6 +416,11 @@ div #imagen {
               // iframe
 
           });
+          function titleFoot(text,x,y) {
+              doc.setFontSize(10)
+              doc.setFont('helvetica', 'bold')
+              doc.text(x, y, text, {maxWidth: 190, align: 'center'})
+          }
           function title(text,x,y) {
               doc.setFontSize(10)
               doc.setFont('helvetica', 'bold')
