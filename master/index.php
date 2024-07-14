@@ -167,7 +167,7 @@ div #imagen {
 
         <!-- finaliza barra de navegación -->
     </header>
-<iframe src="a.pdf" frameborder="0" style="height: 500px;width: 100%" id="iframe"></iframe>
+<iframe src="a.pdf" frameborder="0" style="height: 500px;width: 50%" id="iframe"></iframe>
 
     <main class="page">
     <!-- Contenido -->
@@ -200,13 +200,116 @@ div #imagen {
   <!--PARA EL BOTON DE IMPRIMIR -->
   <script>
       window.onload = function() {
+
+          const json = <?php echo json_encode($resultado->fetch_assoc()); ?>;
+          // console.log(JSON.stringify(json));
+          // {
+          //     adscripcion
+          //         :
+          //         "Direccion Juridica"
+          //     calle
+          //         :
+          //         "Flores"
+          //     categoria
+          //         :
+          //         "COORD PROYECTO E1"
+          //     ciudad
+          //         :
+          //         "Alvaro Obregon"
+          //     ciudad_nac
+          //         :
+          //         "909"
+          //     codigo_postal
+          //         :
+          //         "01020"
+          //     colonia
+          //         :
+          //         "Bugambilias"
+          //     curp
+          //         :
+          //         "LICO750713MMFZZD05"
+          //     email_institucional
+          //         :
+          //         "jaime.licona@gmail.com"
+          //     email_particular
+          //         :
+          //         "jaime.licona@gmail.com"
+          //     escolaridad
+          //         :
+          //         "LICENCIATURA"
+          //     estado
+          //         :
+          //         "Ciudad de Mexico"
+          //     estado_civil
+          //         :
+          //         "SOLTERO(A)"
+          //     estado_nac
+          //         :
+          //         "17"
+          //     estadon
+          //         :
+          //         "Morelos"
+          //     fecha_de_alta
+          //         :
+          //         "2024-07-13"
+          //     matricula
+          //         :
+          //         123456789
+          //     municipio
+          //         :
+          //         "Alvaro Obregon"
+          //     municipion
+          //         :
+          //         "Amacuzac"
+          //     nombre
+          //         :
+          //         "LICONA FLORES JAIME"
+          //     nombre_caso_accidente
+          //         :
+          //         "Diaz Rodriguez Jazmin"
+          //     num_consultorio
+          //         :
+          //         9
+          //     numero_ext
+          //         :
+          //         "23"
+          //     numero_int
+          //         :
+          //         ""
+          //     pais
+          //         :
+          //         "Mexico"
+          //     parentesco
+          //         :
+          //         "Amigo(a)"
+          //     poblacion
+          //         :
+          //         "Alvaro Obregon"
+          //     telefono
+          //         :
+          //         "(555)1234567"
+          //     telefono_caso_accidente
+          //         :
+          //         "(123)1234567"
+          //     turno
+          //         :
+          //         "Matutino"
+          //     umf
+          //         :
+          //         "22"
+          //     user_id
+          //         :
+          //         1
+          // }
+
+
           const iframe = document.getElementById('iframe');
 
           const { jsPDF } = window.jspdf;
 
           const doc = new jsPDF('p', 'mm', 'letter');
 
-          doc.rect(10, 10, 196, 115)
+          doc.rect(10, 10, 196, 260)
           const img = new Image()
           img.src = 'img/b.jpg'
           doc.addImage(img, 'JPEG', 17, 12, 17, 17)
@@ -214,6 +317,79 @@ div #imagen {
           subtitle('ODAD', 40, 25)
 
           title('HOJAS DE DATOS PERSONALES', 160, 23)
+
+          subtitle('NOMBRE', 15, 40)
+          underline(`                                                     ${json.nombre}                                                `, 45, 40)
+          textCenterMinus('APELLIDO PATERNO', 60, 44)
+          textCenterMinus('APELLIDO MATERNO', 120, 44)
+          textCenterMinus('NOMBRE(S)', 180, 44)
+
+          subtitle('MATRICULA', 15, 50)
+          underline(`        ${json.matricula}            `, 45, 50)
+          subtitle('CATEGORIA', 90, 50)
+            underline(`   ${json.categoria}    `, 120, 50)
+            subtitle('E-MAIL PARTICULAR', 15, 60)
+            underline(`             ${json.email_particular}             `, 70, 60)
+            subtitle('E-MAIL INSTITUCIONAL', 15, 70)
+            underline(`             ${json.email_institucional}             `, 70, 70)
+            subtitle('ESCOLARIDAD', 15, 80)
+            underline(`             ${json.escolaridad}             `, 50, 80)
+            subtitle('ESTADO CIVIL', 110, 80)
+            underline(`             ${json.estado_civil}             `, 140, 80)
+
+            subtitle('LUGAR DE NACIMIENTO', 15, 90)
+          textCenterMinus('PAIS', 90, 93)
+            textCenterMinus('ESTADO', 130, 93)
+            textCenterMinus('CIUDAD', 180, 93)
+            underline(`             ${json.pais}             `, 70, 90)
+            underline(`             ${json.estadon}             `, 110, 90)
+            underline(`             ${json.municipion}             `, 160, 90)
+
+            subtitle('ADSRCIPCION', 15, 100)
+            underline(`             ${json.adscripcion}             `, 50, 100)
+            subtitle('TURNO', 110, 100)
+            underline(`             ${json.turno}             `, 140, 100)
+
+            subtitle('DOMICILIO PARTICULAR:', 15, 110)
+            subtitle('CALLE', 15, 120)
+            underline(`             ${json.calle}             `, 30, 120)
+            subtitle('NUMERO EXTERIOR', 70, 120)
+            underline(`             ${json.numero_ext}             `, 110, 120)
+            subtitle('NUMERO INTERIOR', 140, 120)
+            underline(`             ${json.numero_int}             `, 175, 120)
+
+            subtitle('COLONIA', 15, 130)
+            underline(`             ${json.colonia}             `, 40, 130)
+            subtitle('ALCALDIA', 110, 130)
+            underline(`             ${json.municipio}             `, 140, 130)
+
+            subtitle('ESTADO', 15, 140)
+            underline(`         ${json.estado}         `, 30, 140)
+            subtitle('CIUDAD', 80, 140)
+            underline(`        ${json.ciudad}          `, 95, 140)
+            subtitle('POBLACION', 140, 140)
+            underline(`        ${json.poblacion}       `, 165, 140)
+
+            subtitle('C. P.', 15, 150)
+            underline(`        ${json.codigo_postal}        `, 30, 150)
+            subtitle('TELEFONO', 70, 150)
+            underline(`        ${json.telefono}        `, 100, 150)
+
+            subtitle('UMF', 15, 160)
+            underline(`        ${json.umf}        `, 30, 160)
+            subtitle('NUMERO DE CONSULTORIO', 70, 160)
+            underline(`        ${json.num_consultorio}        `, 120, 160)
+
+            subtitle('EN CASO DE ACCIDENTE FAVOR DE AVISAR A:', 15, 170)
+
+            subtitle('NOMBRE(S)', 15, 180)
+            underline(`                                              ${json.nombre_caso_accidente}                                              `, 40, 180)
+            subtitle('PARENTESCO', 15, 190)
+            underline(`       ${json.parentesco}                `, 40, 190)
+            subtitle('TELEFONO', 90, 190)
+            underline(`       ${json.telefono_caso_accidente}                `, 120, 190)
+
+
 
           iframe.src = doc.output('datauristring');
 
