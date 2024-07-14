@@ -1,0 +1,531 @@
+<?php
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Formato IMSS</title>
+
+
+    <!-- CSS -->
+    <link href="https://framework-gb.cdn.gob.mx/gm/v4/image/favicon.ico" rel="shortcut icon">
+    <link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
+
+    <!-- Respond.js soporte de media queries para Internet Explorer 8 -->
+    <!-- ie8.js EventTarget para cada nodo en Internet Explorer 8 -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/ie8/0.2.2/ie8.js"></script>
+    <![endif]-->
+    <style>
+      #contenedorFormato_1{
+        margin-top: 50px;
+        margin-bottom: 50px;
+        padding-top: 20px;
+        border: solid #000 2px !important;
+      }
+
+      #logoIMSS{
+        width: 120px;
+      }
+
+      .flexbox-container {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+      }
+
+      .flexbox-container input, .inputFormulario{
+        width: 100%;
+        border: none;
+        border-bottom: solid black 2PX;
+        margin-left: 5PX;
+      }
+
+      @media print {
+          /* Aquí irían tus reglas CSS específicas para imprimir */
+          *{
+            font-size: 6pt;
+          }
+
+          #logoIMSS{
+            width: 10cm;
+          }
+
+          h4{
+            font-size: 10pt;
+          }
+
+          .main-footer, header{
+            visibility: hidden;
+          }
+          #contenedorFormato_1{
+            margin-top: 0cm !important;
+            margin-bottom: 0cm !important;
+            top: 0cm !important;
+            
+          }
+
+          .page{
+            top: 0cm !important;
+          }
+
+          @page {
+            margin:0.2cm;
+            margin-top: 0cm;
+            padding-top: 0cm;
+
+          }
+      } 
+
+      
+    </style>
+
+  </head>
+
+
+  <?php
+  session_start();
+  $datos= mysqli_query($conexion, "SELECT * FROM dato WHERE id = '$_SESSION['user_name]'");
+  $datos=mysqli_fetch_array($email);
+  $nombre=$datos['nombre'];
+
+  ?>
+
+
+
+
+  <body>
+
+
+
+
+
+    <!-- Contenido -->
+    <main class="page">
+      <div id="contenedorFormato_1" class="container">
+
+        <div class="row">
+          <div class="col-md-1 col-xs-2">
+            <img id="logoIMSS" src="https://1000marcas.net/wp-content/uploads/2022/01/IMSS-Logo.png" alt="">
+          </div>
+          <div class="col-md-8 col-xs-8">
+            
+              INSTITUTO MEXICANO DEL SEGURO SOCIAL<br>
+              COORDINACION DE GESTION DE RECURSOS HUMANOS<br>
+              DIVISION DE PLANEACION DE FUERZA DE TRABAJO            
+            
+          </div>
+          <div class="col-md-3  col-xs-2 text-center">
+            <br>
+              HOJA DE DATOS
+            <br>           
+              PERSONALES
+            </p>            
+          </div>
+          
+        </div>
+
+        
+
+        <div class="row  top-buffer">
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+
+          <div class="col-md-4 col-xs-4 flexbox-container">              
+                <label for="">DELEGACIÓN</label>
+                <div class="col-md-2 col-xs-2 text-center">
+                  <label for="delegacion">NIVEL CENTRAL DIRECCIÓN JURIDICA</label>
+                </div>    
+                <input type="text" name="delegacion" id="delegacion" placeholder="" style="display: inline-block;"> 
+                            
+          </div>
+
+          <div class="col-md-2 col-xs-2">
+            <!-- VACIO -->
+          </div>
+
+          <div class="col-md-4 col-xs-4 flexbox-container">
+            <label>FECHA</label><input type="text"/>
+          </div>
+
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+
+
+
+       
+
+        <div class="row top-buffer">
+          <div class="col-md-2 col-xs-2 text-left">
+            <label>NOMBRE:</label>
+          </div>
+          <div class="col-md-3 col-xs-3 text-center">
+            <input type="text" class="inputFormulario text-center" name="nombre"  id="nombre" placeholder="" style="display: inline-block;" value="<?php echo $row['nombre']?>">
+            <small><span>APELLIDO PATERNO</span></small>
+          </div>
+          <div class="col-md-3 col-xs-3 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+            <small><span>APELLIDO MATERNO</span></small>
+          </div>
+          <div class="col-md-3 col-xs-3 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+            <small><span>NOMBRE (S)</span></small>
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2 col-xs-2 text-left">
+            <label>MATRICULA:</label>
+          </div>
+          <div class="col-md-3 col-xs-3 text-center">
+            <input type="text" class="inputFormulario text-center" name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-1">
+            
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <label>CATEGORIA:</label> 
+          </div>
+          <div class="col-md-3 col-xs-3 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3 col-xs-3 text-left">
+            <label>E-MAIL PARTICULAR:</label>
+          </div>          
+          <div class="col-md-8 col-xs-8 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3 col-xs-3 text-left">
+            <label>E-MAIL INSTITUCIONAL:</label>
+          </div>          
+          <div class="col-md-8 col-xs-8 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2 col-xs-2 text-left">
+            <label>ESCOLARIDAD:</label>
+          </div>
+          <div class="col-md-4 col-xs-4 text-center">
+            <input type="text" class="inputFormulario text-center" name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <label>CATEGORIA:</label> 
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-2">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2 col-xs-2 text-left">
+            <label>LUGAR DE NACIMIENTO:</label>
+          </div>
+          <div class="col-md-3 col-xs-3 text-center">
+            <input type="text" class="inputFormulario text-center" name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-3 col-xs-3 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-3 col-xs-3 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-1 ">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2 col-xs-2  text-left">
+            <label>ADSCRIPCIÓN:</label>
+          </div>
+          <div class="col-md-5 col-xs-5 text-center">
+            <input type="text" class="inputFormulario text-center" name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <label>TURNO:</label> 
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+        <div class="row top-buffer">
+          <div class="col-md-5 col-xs-5 text-left">
+            <h4>DOMICILIO PARTICULAR:</h4>
+          </div>
+          
+          <div class="col-md-3 col-xs-3 text-center">
+            <!-- VACIO -->
+          </div>
+          <div class="col-md-3 col-xs-3 text-center">
+            <!-- VACIO -->
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+        
+
+        <div class="row">
+          <div class="col-md-1 col-xs-1 text-left">
+            <label>CALLE:</label>
+          </div>
+          <div class="col-md-4 col-xs-4 text-center">
+            <input type="text" class="inputFormulario text-center" name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <label>NUMERO EXT.</label>
+          </div>
+          <div class="col-md-1 col-xs-1 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <label>NUMERO INT.</label>
+          </div>
+          <div class="col-md-1 col-xs-1 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-1 col-xs-1 text-left">
+            <label>COLONIA:</label>
+          </div>
+          <div class="col-md-4 col-xs-4 text-center">
+            <input type="text" class="inputFormulario text-center" name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-3 col-xs-3 text-center">
+            <label>DELEGACIÓN O MUNICIPIO:</label> 
+          </div>
+          <div class="col-md-3 col-xs-3 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-1 col-xs-1 text-left">
+            <label>ESTADO:</label>
+          </div>
+          <div class="col-md-3 col-xs-3 text-center">
+            <input type="text" class="inputFormulario text-center" name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-1 text-center">
+            <label>CIUDAD:</label>
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <label>POBLACIÓN:</label>
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2 col-xs-2 text-left">
+            <label>C.P.:</label>
+          </div>
+          <div class="col-md-5 col-xs-5 text-center">
+            <input type="text" class="inputFormulario text-center" name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <label>TELÉFONO (S):</label> 
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2 col-xs-2 text-left">
+            <label>U.M.F.:</label>
+          </div>
+          <div class="col-md-5 col-xs-5 text-center">
+            <input type="text" class="inputFormulario text-center" name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <label>NÚMERO DE CONSULTORIO:</label> 
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+        <div class="row top-buffer">
+          <div class="col-md-7 col-xs-7 text-left">
+            <h4>EN CASO DE ACCIDENTE FAVOR DE AVISAR A:</h4>
+          </div>
+          
+          <div class="col-md-1 col-xs-1 text-center">
+            <!-- VACIO -->
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <!-- VACIO -->
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2 col-xs-2 text-left">
+            <label>NOMBRE (S):</label>
+          </div>
+          
+          <div class="col-md-9 col-xs-9 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-2 col-xs-2 text-left">
+            <label>PARENTESCO:</label>
+          </div>
+          <div class="col-md-5 col-xs-5 text-center">
+            <input type="text" class="inputFormulario text-center" name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <label>TELÉFONO (S):</label> 
+          </div>
+          <div class="col-md-2 col-xs-2 text-center">
+            <input type="text" class="inputFormulario text-center"  name="" id="" placeholder="" style="display: inline-block;"> 
+          </div>
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+
+      <?php
+      }
+      ?>
+
+        
+        <div class="row top-buffer">
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+
+          <div class="col-md-10 col-xs-10 text-center">
+            <small><small>
+              <label style="font-style:italic;">ME COMPROMETO A INFORMAR CUALQUIERCAMBIO DE LOS DATOS ANTES MENCIONADOS, ESTANDO DE ACUERDO QUE PUEDEN SER VERIFICADOS, CONOCIENDO LA SANCIÓN ADMINISTRATIVA EN CASO DE PROPORCIONAR DATOS FALSOS</label>
+            </small></small>
+          </div>
+         
+          <div class="col-md-1 col-xs-1">
+            <!-- VACIO -->
+          </div>
+        </div>
+        
+        <br>
+
+        <div class="row top-buffer">
+          <div class="col-md-4 col-xs-4">
+            <!-- VACIO -->
+          </div>
+
+          <div class="col-md-4 col-xs-4 text-center"  style="border-top: #000 2PX SOLID;">
+            <label>FIRMA DEL TRABAJADOR</label>
+          </div>
+         
+          <div class="col-md-4 col-xs-4">
+            <!-- VACIO -->
+          </div>
+        </div>
+
+
+
+
+        <div class="row top-buffer">
+          <div class="col-md-9 col-xs-9 text-left">
+            <small>
+              <label>NOTA: SE DEBE ADJUNTAR COPIA DE CREDENCIAL DE ELECTOR Y COMPROBANTE DE DOMICILIO</label>
+            </small>
+          </div>
+         
+          
+
+          <div class="col-md-3 col-xs-3 text-right">
+            <small><B>
+              <label style="position: relative; bottom:-30PX;">1A12-009-120</label>
+            </B></small>
+          </div>
+        </div>
+
+
+      </div>
+      
+    </main>
+
+    <!-- JS -->
+    <script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
+
+  </body>
+</html>
+
+
+
+?>

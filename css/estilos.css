@@ -1,0 +1,95 @@
+
+body
+{
+
+background: url(../img/background.jpg);
+}
+
+header 
+{	
+
+	margin-top: 4%;
+	margin-right: 2%;
+	margin-left: 2%;
+	text-align: center;
+
+}
+
+section 
+{
+
+	margin-right: 2%;
+	margin-left: 2%;
+}
+
+.pad-basic
+
+{
+padding:.5%; 
+	
+}
+
+.no-btm
+{
+	margin-bottom:0%;
+}
+
+.btn-der
+{
+	text-align: right;
+}
+
+.button1 {background-color: #4CAF50;} /* Green */
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: center;
+    text-align: center;
+    text-decoration: none;
+    display: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+	width: 33.33%;
+}
+
+div.center {
+	text-align: center;
+  }
+
+
+  #formul { 
+    padding: 20px 0px 0px 30px;   /* margen con valores: arriba - derecha - abajo - izquierda */
+    font-family:verdana,arial;
+    font-size:9pt;
+} 
+
+.campos { 
+    font-family:verdana,arial;     /* tipo de letra */ 
+    width: 500px;                 /* anchura de campos de formulario */ 
+    font-size:8pt;                /* tamaño de la letra*/  
+    color:#008000;                 /* color del texto */  
+    border: 1px dotted red;        /* color del borde puede ser solid ó dotted */  
+    background-color:#FFFF00;    /* color del fondo */  
+} 
+
+.boton{
+    font-size:12px;
+    font-family:Verdana,Helvetica;
+    font-weight:bold;
+    color:#0000FF;
+    background:#A4C1FF;
+    border:0px;
+    width:120px;
+    height:25px;
+}
+
+#b_reset { 
+    margin: 0px 0px 0px 0px;    /* margen con valores: arriba - derecha - abajo - izquierda */ 
+} 
+
+#b_submit { 
+    margin: -25px 0px 0px 380px;    /* margen con valores: arriba - derecha - abajo - izquierda */ 
+} 
