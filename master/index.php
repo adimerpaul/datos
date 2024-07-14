@@ -391,6 +391,7 @@ div #imagen {
 
           titleFoot('ME COMPROMETO A INFORMAR CUALQUIERCAMBIO DE LOS DATOS ANTES MENCIONADOS, ESTANDO DE ACUERDO QUE PUEDEN SER VERIFICADOS, CONOCIENDO LA SANCIÓN ADMINISTRATIVA EN CASO DE PROPORCIONAR DATOS FALSOS', 110, 200)
 
+            text(`                  ${json.curp}                      `, 75, 235)
           titleFoot('________________________________________', 110, 235)
             titleFoot('FIRMA DE LA TRABAJADORA/TRABAJADOR', 110, 240)
           textMinusWithAuto('NOTA: SE DEBE ADJUNTAR COPIA DE CREDENCIAL DE ELECTOR Y COMPROBANTE DE DOMICILIO', 15, 255)
