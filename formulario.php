@@ -12,7 +12,7 @@ function contenido()
 
   <?php
   include("conexion.php");
-  session_start();
+//  session_start();
   if (!isset($_SESSION["user_id"]) || $_SESSION["user_id"] == null || !isset($_SESSION["role_id"])) {
     print "<script>alert(\"Acceso inválido!\");window.location='login.php';</script>";
     exit();
@@ -643,12 +643,12 @@ function contenido()
                 transform: scale(0.95);
                 transform-origin: top left;
             }
-            
+
             /* Evita que ciertos elementos se muestren en la impresión */
             .no-print {
                 display: none;
             }
-            
+
             /* Configura la impresión de la primera página */
             @page {
                 size: auto; /* Tamaño de página automático */

@@ -1,3 +1,58 @@
+<?php
+session_start();
+$user_id = $_SESSION['user_id']['id'];
+$role_id = $_SESSION['role_id'];
+include("conexion.php");
+if ($role_id == 2) {
+    // Usuario con role 2 (employee), solo puede ver sus propios datos
+    $sql = "SELECT a.nombre,a.matricula,a.categoria,a.email_particular,a.email_institucional,a.escolaridad,a.estado_civil,a.pais,
+        a.adscripcion,a.turno,a.calle, a.numero_ext, a.numero_int, a.colonia,a.municipio, a.estado,a.ciudad, 
+        a.poblacion, a.codigo_postal,a.telefono,a.umf, a.num_consultorio, a.nombre_caso_accidente,
+        a.parentesco, a.telefono_caso_accidente, a.curp, a.fecha_de_alta,a.user_id,a.estado_nac, b.estado AS estadon, a.ciudad_nac,d.municipio AS municipion  
+        FROM datos a
+        LEFT JOIN cat_estados b ON a.estado_nac=b.id_estado 
+        LEFT JOIN cat_municipios d ON a.ciudad_nac=d.id_mun
+        WHERE a.user_id = ?"; // Cambiado de user_id a a.user_id
+
+    // Preparar la sentencia SQL
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+} elseif ($role_id == 1) {
+    // Usuario con role 1 (admin), puede ver datos basados en la matrícula seleccionada
+    if (isset($_GET['matricula'])) {
+        $matricula = $_GET['matricula'];
+
+        $sql = "SELECT a.nombre,a.matricula,a.categoria,a.email_particular,a.email_institucional,a.escolaridad,a.estado_civil,a.pais,
+    a.adscripcion,a.turno,a.calle, a.numero_ext, a.numero_int, a.colonia,a.municipio, a.estado,a.ciudad, 
+    a.poblacion, a.codigo_postal,a.telefono,a.umf, a.num_consultorio, a.nombre_caso_accidente,
+    a.parentesco, a.telefono_caso_accidente, a.curp, a.fecha_de_alta,a.user_id,a.estado_nac, b.estado AS estadon, a.ciudad_nac,d.municipio AS municipion  
+    FROM datos a
+    LEFT JOIN cat_estados b ON a.estado_nac=b.id_estado 
+    LEFT JOIN cat_municipios d ON a.ciudad_nac=d.id_mun
+    WHERE a.matricula = ?";
+
+        // Preparar la sentencia SQL
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("s", $matricula);
+    } else {
+        // No se proporcionó la matrícula
+        print "<script>alert(\"Acceso inválido. No se proporcionó la matrícula.\");window.location='login.php';</script>";
+        exit();
+    }
+} else {
+    // Role inválido
+    print "<script>alert(\"Role inválido\");</script>";
+    print "<script>alert(\"Acceso inválido.\");window.location='login.php';</script>";
+    exit();
+}
+
+// Ejecutar la consulta preparada
+$stmt->execute();
+
+// Obtener los resultados
+$resultado = $stmt->get_result();
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,13 +67,14 @@
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
-    
+
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="shortcut icon">
     <link href="https://framework-gb.cdn.gob.mx/gm/v4/image/favicon.ico" rel="shortcut icon">
     <link href="https://framework-gb.cdn.gob.mx/gm/v4/css/main.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<style>       
+<style>
  *{
 margin:0;
 padding:0;
@@ -40,10 +96,10 @@ background-color:#ffffbb;
 }
 
 
-div 
+div
 #imagen
 {
-   
+
   border: 2px solid #CCC;
   padding: 1em;
   margin: 1em 0 1em 4em;
@@ -52,7 +108,7 @@ div
 
 div #imagen {
   position: absolute;
-  top:  10px; 
+  top:  10px;
   left: 10px;
 }
 
@@ -62,7 +118,7 @@ div #imagen {
 
 
 
-</style> 
+</style>
 
 
 
@@ -78,43 +134,44 @@ div #imagen {
                     <span class="navbar-toggler-icon"></span>
                   </button>
                   <!--<a class="navbar-brand sub-navbar" href="https://www.gob.mx/salud">Imprimir</a>-->
-                  <button class="navbar-brand sub-navbar" id="btnPrint">Imprimir</button>
- 
+                  <button class="navbar-brand sub-navbar" id="btnPrint">Descargar</button>
+
                 <div class="collapse navbar-collapse" id="subNavBarDropdown">
                   <ul class="navbar-nav">
- 
+
                     <li class="nav-item">
                       <a class="nav-link subnav-link" href="php/logout.php" target="_parent">Salir</a>
                     </li>
- 
+
                     <li class="nav-item">
                       <!-- <a class="nav-link subnav-link" href="#">Enlace</a> -->
                     </li>
- 
+
                     <li class="nav-item dropdown">
                       <a class="nav-link subnav-link dropdown-toggle" href="menu.php" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Menu
                       </a>
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">                        
-                          <a class="dropdown-item" href="menu.php" target="_blank">Contacto</a>                    
-                        
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="menu.php" target="_blank">Contacto</a>
+
                         <div class="dropdown-divider"></div>
-                      
+
                           <a class="dropdown-item" href="#" target="_blank">Plataforma<br>informativa</a>
                       </div>
                     </li>
-                    
+
                   </ul>
                 </div>
               </div>
-          </nav>     
-        
-        <!-- finaliza barra de navegación -->   
+          </nav>
+
+        <!-- finaliza barra de navegación -->
     </header>
+<iframe src="a.pdf" frameborder="0" style="height: 500px;width: 100%" id="iframe"></iframe>
 
     <main class="page">
     <!-- Contenido -->
-        
+
         <div class="container">
             <br />
 
@@ -142,11 +199,95 @@ div #imagen {
 
   <!--PARA EL BOTON DE IMPRIMIR -->
   <script>
-        // Agrega un listener al botón para detectar el clic
-        document.getElementById("btnPrint").addEventListener("click", function() {
-            // Abre el cuadro de diálogo de impresión del navegador
-            window.print();
-        });
+      window.onload = function() {
+          const iframe = document.getElementById('iframe');
+
+          const { jsPDF } = window.jspdf;
+
+          const doc = new jsPDF('p', 'mm', 'letter');
+
+          doc.rect(10, 10, 196, 115)
+          const img = new Image()
+          img.src = 'img/b.jpg'
+          doc.addImage(img, 'JPEG', 17, 12, 17, 17)
+          subtitle('DIRECCIÓN DE ADMINITRACION', 40, 18)
+          subtitle('ODAD', 40, 25)
+
+          title('HOJAS DE DATOS PERSONALES', 160, 23)
+
+          iframe.src = doc.output('datauristring');
+
+
+          // Agrega un listener al botón para detectar el clic
+          document.getElementById("btnPrint").addEventListener("click", function() {
+              // window.print();
+              const { jsPDF } = window.jspdf;
+
+              const doc = new jsPDF('p', 'mm', 'letter');
+
+              doc.rect(10, 10, 196, 115)
+              const img = new Image()
+              img.src = 'img/b.jpg'
+              doc.addImage(img, 'JPEG', 5, 12, 17, 17)
+
+              doc.save("direccion.pdf");
+              // iframe
+
+          });
+          function title(text,x,y) {
+              doc.setFontSize(10)
+              doc.setFont('helvetica', 'bold')
+              doc.text(x, y, text, {maxWidth: 60, align: 'center'})
+          }
+          function subtitle(text,x,y) {
+              doc.setFontSize(10)
+              doc.setFont('helvetica', 'bold')
+              doc.text(x, y, text)
+          }
+          function text(text,x,y) {
+              doc.setFontSize(10)
+              doc.setFont('helvetica', 'normal')
+              doc.text(x, y, text, {maxWidth: 190})
+          }
+          function textCenter(text,x,y) {
+              doc.setFontSize(10)
+              doc.setFont('helvetica', 'normal')
+              doc.text(x, y, text, null, null, 'center')
+          }
+          function textCenterMinus(text,x,y) {
+              doc.setFontSize(7)
+              doc.setFont('helvetica', 'normal')
+              doc.text(x, y, text, null, null, 'center')
+          }
+          function underline(text,x,y) {
+
+              doc.setFontSize(10)
+              doc.setFont('helvetica', 'normal')
+              const levelCentralText = text
+              const levelCentralX = x
+              const levelCentralY = y
+              doc.text(levelCentralX, levelCentralY, levelCentralText)
+              const textWidth = doc.getTextWidth(levelCentralText)
+              doc.setLineWidth(0.2)
+              doc.line(levelCentralX, levelCentralY + 1, levelCentralX + textWidth, levelCentralY + 1)
+          }
+          function textMinusWithAuto(text,x,y) {
+              doc.setFontSize(7)
+              doc.setFont('helvetica', 'normal')
+              doc.text(x, y, text, {maxWidth: 190})
+          }
+          function underlineBold(text,x,y) {
+              doc.setFontSize(10)
+              doc.setFont('helvetica', 'bold')
+              const levelCentralText = text
+              const levelCentralX = x
+              const levelCentralY = y
+              doc.text(levelCentralX, levelCentralY, levelCentralText)
+              const textWidth = doc.getTextWidth(levelCentralText)
+              doc.setLineWidth(0.2)
+              doc.line(levelCentralX, levelCentralY + 1, levelCentralX + textWidth, levelCentralY + 1)
+          }
+      }
     </script>
 <script>
         // Función que se ejecuta antes de imprimir
